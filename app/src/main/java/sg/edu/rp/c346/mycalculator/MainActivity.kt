@@ -9,12 +9,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
+    var numbers : MutableList<Double> = mutableListOf<Double>()
+    var calculation : MutableList<String> = mutableListOf<String>()
     var msg = ""
     var display = ""
     var count = 0
     var dotPressed = 0;
-    var nums : MutableList<Double> = mutableListOf<Double>()
-    var calculation : MutableList<String> = mutableListOf<String>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,12 +29,14 @@ class MainActivity : AppCompatActivity() {
             buttonAC.id -> {
                 display = ""
                 msg = ""
-                nums.clear()
+                numbers.clear()
                 calculation.clear()
+                dotPressed = 0
             }
             buttonDivide.id -> {
                 count = 0
                 msg += "/"
+                dotPressed = 0
             }
             button3.id -> {
                 if (count == 0){
@@ -65,6 +68,7 @@ class MainActivity : AppCompatActivity() {
             buttonMultiply.id -> {
                 count = 0
                 msg += "*"
+                dotPressed = 0
             }
             button7.id -> {
                 if (count == 0){
@@ -96,6 +100,7 @@ class MainActivity : AppCompatActivity() {
             buttonMinus.id -> {
                 count = 0
                 msg += "-"
+                dotPressed = 0
             }
             button11.id -> {
                 if (count == 0){
@@ -127,6 +132,7 @@ class MainActivity : AppCompatActivity() {
             buttonPlus.id -> {
                 count = 0
                 msg += "+"
+                dotPressed = 0
             }
             button15.id -> {
 
@@ -160,7 +166,7 @@ class MainActivity : AppCompatActivity() {
                 var number = ""
                 for (i in msg){
                     if (i.equals('+') || i.equals('*') || i.equals('/') || i.equals('-') || i.equals('=')){
-                        nums.add(number.toDouble())
+                        numbers.add(number.toDouble())
                         calculation.add(i.toString())
                         number = ""
                     }else{
@@ -168,12 +174,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
                 var counter = 0
-                for (i in 0..(nums.size-1)){
+                for (i in 0..(numbers.size-1)){
                     if (counter == 0){
-                        num = nums.get(i)
+                        num = numbers.get(i)
+
                     }else{
-                        Log.d("Calculation", nums.get(i).toString())
-                        var numb = nums.get(i)
+
+                        var numb = numbers.get(i)
                         var cal = calculation.get(i-1)
                         if (cal.equals("+")){
                             num = num + numb
@@ -187,11 +194,12 @@ class MainActivity : AppCompatActivity() {
                     }
                     counter++
                 }
-                Log.d("Mainactivity", "$num")
+
                 display = "$num"
                 msg = "$num"
-                nums.clear()
+                numbers.clear()
                 calculation.clear()
+                dotPressed = 0
             }
 
         }
